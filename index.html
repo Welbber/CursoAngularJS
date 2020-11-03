@@ -1,52 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-br" ng-app="listaTelefonica">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.8.2/angular-locale_pt-br.min.js"></script>
     
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-messages.js"></script>
+
+
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    
-    <link rel="stylesheet" href="style.css">
-    
+
+     
+
     <script src="lista-telefonica.js"></script>
- 
+
+
     <title>Lista Telefonica</title>
 </head>
+
 <body ng-controller="listaTelefonicaCtrl as vm">
     <div class="jumbotron">
-        
+
         <h4 ng-bind="vm.app"></h4>
-      
+        <input type="texc"  class="form-control"  ng-model="criterioDeBusca" placeholder="O que você está buscando?">
         <table ng-show="vm.contatos.length > 0" class="table">
             <tr>
                 <th></th>
-                <th>Nome</th>
-                <th>Telefone</th>
+                <th><a  href="" ng-click="vm.ordenarPor('nome')">Nome</a></th>
+                <th><a  href="" ng-click="vm.ordenarPor('telefone')">Telefone</a></th>
                 <th>Operadora</th>
+                <th>Data</th>
+                <th>Cor</th>
             </tr>
-          
-            <tr ng-class="{'selecionado negrito' : contato.selecionado}" ng-repeat="contato in vm.contatos">
-                <td><input type="checkbox" ng-model="contato.selecionado"/></td>
+
+            <tr ng-class="{'selecionado negrito' : contato.selecionado}" ng-repeat="contato in vm.contatos | limitTo:2 | filter:criterioDeBusca | orderBy:vm.criterioDeOrdenacao:vm.direcaoDaOrdenacao ">
+                <td><input type="checkbox" ng-model="contato.selecionado" /></td>
                 <td>{{contato.nome}}</td>
                 <td>{{contato.telefone}}</td>
                 <td>{{contato.operadora.nome}}</td>
-                <td><div style="width: 20px; height: 20px;" ng-style="{'background-color':contato.cor}"></div></td>
+                <td>{{contato.data | date:'EEE dd/MM/yyyy hh:mm'}}</td>
+                <td>
+                    <div style="width: 20px; height: 20px;" ng-style="{'background-color':contato.cor}"></div>
+                </td>
             </tr>
         </table>
-        <hr/>
-       
-        <input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome"/>
-        <input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone"/>
-        <!--ng-options="operadora.codigo as operadora.nome for operadora in vm.operadoras" -->
-        <select ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in vm.operadoras" class="form-control">
-            <option value=""> Selecione uma operadora</option>
-        </select>
-        <button class="btn btn-primary btn-block" ng-click="vm.adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone || !contato.operadora">Adicionar Contato</button>        
-        <button class="btn btn-danger btn-block" ng-click="vm.apagarContato(vm.contatos)" ng-show="vm.isContatoSelecionado(vm.contatos)">Excluir Contato</button>        
-        <div ng-include="'footer.html'"></div>
+        <hr />
+        <form name="contatoForm">
+            
+            <input class="form-control" type="text" ng-model="contato.nome" name="nome" placeholder="Nome"
+                ng-required="true" ng-minlength="10" />
+            <input class="form-control" type="text" name="telefone" ng-model="contato.telefone" placeholder="Telefone"
+                ng-required="true" ng-pattern="/^{11}$/" />
+            <!--ng-options=" operadora.codigo as operadora.nome for operadora in vm.operadoras" -->
+            <select ng-model="contato.operadora"
+                ng-options="operadora.nome +' ('+(operadora.preco | currency)+')' group by operadora.categoria  for operadora in vm.operadoras | orderBy:'nome'"
+                class="form-control">
+                <option value=""> Selecione uma operadora</option>
+            </select>
+        </form>
+        
+        <div ng-messages="contatoForm.nome.$error" >
+            <div ng-message="required">asdasd</div>
+            <div ng-message="pattern" class="alert alert-danger">
+                Por favor, preencha o nome!
+            </div>
+            <div ng-message="minlength" class="alert alert-danger">
+                O nome deve ter no mínimo 10 letras
+            </div>
+        </div>
+        <div ng-messages="contatoForm.telefone.$error" ng-show="contatoForm.telefone.$error.$dirty && contatoForm.telefone.$error.pattern" class="alert alert-danger">
+            <div ng-message="required">
+                Por favor, preencha o telefone!
+            </div>
+            <div ng-message="pattern">
+                O telefone deve ser preenchido de acordo com esse padrão DDDD-DDDD>
+            </div>
+           
+        </div>
+         <button class="btn btn-primary btn-block" ng-click="vm.adicionarContato(contato)"
+                ng-disabled="contatoForm.$invalid">Adicionar
+                Contato</button>
+            <button class="btn btn-danger btn-block" ng-click="vm.apagarContato(vm.contatos)"
+                ng-show="vm.isContatoSelecionado(vm.contatos)">Excluir Contato</button>
     </div>
 </body>
+
 </html>
