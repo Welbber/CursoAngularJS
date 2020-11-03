@@ -16,7 +16,7 @@
         vm.app = "Lista Telefonica";
         vm.classe = "selecionado";
      
-        
+       
         vm.contatos = [
             {nome : 'Welbber', telefone: "1234-1234", cor: "red", data: new Date()},
             {nome : 'jose', telefone: "4321-4321", cor: "yellow", data: new Date()},
