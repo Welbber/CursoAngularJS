@@ -17,24 +17,36 @@
 </head>
 <body ng-controller="listaTelefonicaCtrl as vm">
     <div class="jumbotron">
+        
         <h4 ng-bind="vm.app"></h4>
-
-        <table class="table table-striped">
+      
+        <table ng-show="vm.contatos.length > 0" class="table">
             <tr>
+                <th></th>
                 <th>Nome</th>
                 <th>Telefone</th>
+                <th>Operadora</th>
             </tr>
-            <tr ng-repeat="contato in vm.contatos">
-                <td ng-repeat="(key, value) in contato">
-                    {{value}}
-                </td>
-
+          
+            <tr ng-class="{'selecionado negrito' : contato.selecionado}" ng-repeat="contato in vm.contatos">
+                <td><input type="checkbox" ng-model="contato.selecionado"/></td>
+                <td>{{contato.nome}}</td>
+                <td>{{contato.telefone}}</td>
+                <td>{{contato.operadora.nome}}</td>
+                <td><div style="width: 20px; height: 20px;" ng-style="{'background-color':contato.cor}"></div></td>
             </tr>
         </table>
         <hr/>
+       
         <input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome"/>
         <input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone"/>
-        <button class="btn btn-primary btn-block" ng-click="vm.adicionarContato(contato)">Adicionar Contato</button>        
+        <!--ng-options="operadora.codigo as operadora.nome for operadora in vm.operadoras" -->
+        <select ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in vm.operadoras" class="form-control">
+            <option value=""> Selecione uma operadora</option>
+        </select>
+        <button class="btn btn-primary btn-block" ng-click="vm.adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone || !contato.operadora">Adicionar Contato</button>        
+        <button class="btn btn-danger btn-block" ng-click="vm.apagarContato(vm.contatos)" ng-show="vm.isContatoSelecionado(vm.contatos)">Excluir Contato</button>        
+        <div ng-include="'footer.html'"></div>
     </div>
 </body>
 </html>
