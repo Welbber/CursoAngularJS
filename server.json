@@ -1,17 +1,5 @@
 {
-  "contato": [
-    {
-      "nome": "wemerson",
-      "telefone": "1234-4322",
-      "operadora": {
-        "nome": "Tim",
-        "codigo": 91,
-        "categoria": "Celular",
-        "preco": 3
-      },
-      "id": 2
-    }
-  ],
+  "contato": [],
   "operadora": [
     {
       "nome": "Oi",

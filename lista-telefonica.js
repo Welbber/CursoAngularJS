@@ -33,6 +33,7 @@
                 url: 'http://localhost:3000/contato'
             }).then(function successCallback(response) {
                 vm.contatos = response.data;
+                vm.idFinal = vm.contatos[vm.contatos.length - 1].id;
             }, function errorCallback(response) {
                 alert("Erro ao solicitar dados do servidor");
             });
@@ -51,30 +52,32 @@
         recuperaContatos();
         recuperaOperadoras();
         function adicionarContato(contato) {
-           
+
             contato.data = new Date();
-            contato.id = vm.contatos.length + 1;
-            
+            contato.id = vm.idFinal + 1;
+
             $http({
                 method: 'POST',
                 url: 'http://localhost:3000/contato/',
                 data: contato
             }).then(function successCallback(response) {
                 recuperaContatos();
+                delete $scope.contato
             }, function errorCallback(response) {
                 alert("Erro ao salvar contato no servidor");
             });
         }
-     
+
         function apagarContato(contatos) {
-            console.log(contatos);
+
             contatos.filter(function (contato) {
-                if (!contato.selecionado) {
+                if (contato.selecionado) {
                     $http({
                         method: 'DELETE',
                         url: 'http://localhost:3000/contato/' + contato.id
                     }).then(function successCallback(response) {
                         recuperaContatos();
+
                     }, function errorCallback(response) {
                         alert("Erro ao solicitar dados do servidor");
                     });
