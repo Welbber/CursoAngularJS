@@ -15,10 +15,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
 
-    <script src="lista-telefonica.js"></script>
-
+    <script src="js/app.js"></script>
+    <script src="js/controllers/listaTelefonicaCtrl.js"></script>
 
     <title>Lista Telefonica</title>
 </head>
@@ -35,7 +35,7 @@
                 <th><a href="" ng-click="vm.ordenarPor('telefone')">Telefone</a></th>
                 <th>Operadora</th>
                 <th>Data</th>
-             
+
             </tr>
 
             <tr ng-class="{'selecionado negrito' : contato.selecionado}"
@@ -45,7 +45,7 @@
                 <td>{{contato.telefone}}</td>
                 <td>{{contato.operadora.nome}}</td>
                 <td>{{contato.data | date:'dd/MM/yyyy'}}</td>
-                
+
             </tr>
         </table>
         <hr />
@@ -57,7 +57,7 @@
                 ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/" />
 
             <!--ng-options=" operadora.codigo as operadora.nome for operadora in vm.operadoras" -->
-            <select ng-model="contato.operadora"
+            <select ng-model="contato.operadora" ng-required="true"
                 ng-options="operadora.nome +' ('+(operadora.preco | currency)+')' group by operadora.categoria  for operadora in vm.operadoras | orderBy:'nome'"
                 class="form-control">
                 <option value=""> Selecione uma operadora</option>
@@ -80,10 +80,12 @@
             </div>
         </div>
         <button class="btn btn-primary btn-block" ng-click="vm.adicionarContato(contato)"
-            ng-disabled="contatoForm.$invalid">Adicionar
-            Contato</button>
+            ng-disabled="contatoForm.$invalid">Adicionar Contato</button>
         <button class="btn btn-danger btn-block" ng-click="vm.apagarContato(vm.contatos)"
             ng-show="vm.isContatoSelecionado(vm.contatos)">Excluir Contato</button>
+    </div>
+    <div ng-include="'view/footer.html'">asd</div>
+    </div>
 </body>
 
 </html>

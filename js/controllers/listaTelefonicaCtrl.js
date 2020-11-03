@@ -1,11 +1,4 @@
-(function () {
-    "use strict";
-
-    // MODULO
-
-    angular.module('listaTelefonica', ["ngMessages"]);
-
-    angular.module('listaTelefonica').controller("listaTelefonicaCtrl", listaTelefonicaCtrl);
+angular.module('listaTelefonica').controller("listaTelefonicaCtrl", listaTelefonicaCtrl);
 
     listaTelefonicaCtrl.$inject = ['$scope', '$http'];
 
@@ -99,4 +92,3 @@
             vm.direcaoDaOrdenacao = !vm.direcaoDaOrdenacao;
         }
     }
-})();
