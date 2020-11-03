@@ -1,0 +1,53 @@
+{
+  "contato": [
+    {
+      "nome": "wemerson",
+      "telefone": "1234-4322",
+      "operadora": {
+        "nome": "Tim",
+        "codigo": 91,
+        "categoria": "Celular",
+        "preco": 3
+      },
+      "id": 2
+    }
+  ],
+  "operadora": [
+    {
+      "nome": "Oi",
+      "codigo": 88,
+      "categoria": "Celular",
+      "preco": 1
+    },
+    {
+      "nome": "Claro",
+      "codigo": 93,
+      "categoria": "Celular",
+      "preco": 2
+    },
+    {
+      "nome": "Tim",
+      "codigo": 91,
+      "categoria": "Celular",
+      "preco": 3
+    },
+    {
+      "nome": "Vivo",
+      "codigo": 84,
+      "categoria": "Celular",
+      "preco": 5
+    },
+    {
+      "nome": "GVT",
+      "codigo": 25,
+      "categoria": "Fixo",
+      "preco": 0.5
+    },
+    {
+      "nome": "Embratel",
+      "codigo": 21,
+      "categoria": "Fixo",
+      "preco": 1.5
+    }
+  ]
+}

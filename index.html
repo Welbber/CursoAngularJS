@@ -35,7 +35,7 @@
                 <th><a href="" ng-click="vm.ordenarPor('telefone')">Telefone</a></th>
                 <th>Operadora</th>
                 <th>Data</th>
-                <th>Cor</th>
+             
             </tr>
 
             <tr ng-class="{'selecionado negrito' : contato.selecionado}"
@@ -44,10 +44,8 @@
                 <td>{{contato.nome}}</td>
                 <td>{{contato.telefone}}</td>
                 <td>{{contato.operadora.nome}}</td>
-                <td>{{contato.data | date:'EEE dd/MM/yyyy hh:mm'}}</td>
-                <td>
-                    <div style="width: 20px; height: 20px;" ng-style="{'background-color':contato.cor}"></div>
-                </td>
+                <td>{{contato.data | date:'dd/MM/yyyy'}}</td>
+                
             </tr>
         </table>
         <hr />
